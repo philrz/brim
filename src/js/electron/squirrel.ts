@@ -1,3 +1,4 @@
+import log from "electron-log"
 import path from "path"
 import child_process from "child_process"
 
@@ -30,6 +31,8 @@ export function handleSquirrelEvent(app: any) {
   const squirrelEvent = process.argv[1]
   switch (squirrelEvent) {
     case "--squirrel-install":
+      log.info("squirrel-install running...")
+      break
     case "--squirrel-updated":
       // Optionally do things such as:
       // - Add your .exe to the PATH

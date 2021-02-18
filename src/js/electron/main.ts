@@ -4,7 +4,7 @@ import userTasks from "./userTasks"
 // app path and log setup should happen before other imports.
 appPathSetup()
 
-import {app} from "electron"
+import {app, protocol} from "electron"
 import log from "electron-log"
 import "regenerator-runtime/runtime"
 import {setupAutoUpdater} from "./autoUpdater"
@@ -40,6 +40,8 @@ async function main() {
   }
 
   app.on("second-instance", (e, argv) => {
+    log.info("second-instance argv is: ", argv)
+    log.info("second-instance event is: ", e)
     for (let arg of argv) {
       switch (arg) {
         case "--new-window":
@@ -52,11 +54,22 @@ async function main() {
     }
   })
 
-  app.whenReady().then(() => brim.start())
+  app.whenReady().then(() => {
+    protocol.registerHttpProtocol("brim", (req, cb) => {
+      log.info("registerHttpProtocol caught!, url is: ", req.url)
+      // @ts-ignore
+      cb(req.url)
+    })
+    brim.start()
+  })
   app.on("activate", () => brim.activate())
 
+  // TODO: remove this if above handler works better?
+  log.info("dist swapping is working!")
   app.setAsDefaultProtocolClient("brim")
+
   app.on("open-url", (event, url) => {
+    log.info("open-url caught!, url is: ", url)
     // recommended to preventDefault in docs: https://www.electronjs.org/docs/api/app#event-open-url-macos
     event.preventDefault()
     brim.openUrl(url)
