@@ -36,7 +36,7 @@ test("createSpan", () => {
   const to = new Date(1)
   const span = createSpan(from, to)
 
-  expect(span).toEqual({ts: {sec: 0, ns: 0}, dur: {sec: 0, ns: 1000000}})
+  expect(span).toEqual({ts: {sec: 0, ns: 0}, dur: "1000000ns"})
 })
 
 test("FracSec constructor", () => {
