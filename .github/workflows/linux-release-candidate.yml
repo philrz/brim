@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - rc-v*
-  schedule:
-    - cron: '5 8 * * *'
   workflow_dispatch:
 
 jobs:
