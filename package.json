@@ -1,7 +1,7 @@
 {
   "name": "Brim",
   "description": "Brim Desktop App",
-  "repository": "https://github.com/brimdata/brim",
+  "repository": "https://github.com/philrz/brim",
   "license": "BSD-3-Clause",
   "version": "0.24.0",
   "main": "dist/src/js/electron/main.js",
